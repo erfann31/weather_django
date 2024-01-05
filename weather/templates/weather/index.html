@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>What's the weather like?</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.css" />
+</head>
+<body>
+    <section class="hero is-primary">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">
+                    What's the weather like?
+                </h1>
+            </div>
+        </div>
+    </section>
+    <section class="section">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column is-half city-input">
+                    <form method="GET">
+                        <div class="field has-addons">
+                            <div class="control is-expanded">
+                                <input class="input" type="text" name="city" placeholder="City Name" value="{{ selected_city }}">
+                            </div>
+                            <div class="control">
+                                <button class="button is-info">
+                                    Get Weather
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section">
+        <div class="container">
+            <div class="columns is-multiline">
+                {% for date, forecasts in weather_forecast_data.items %}
+                    <div class="column is-half">
+                        <h2 class="title">{{ date }}</h2>
+                        <div class="forecast-table">
+                            <table class="table is-striped is-fullwidth">
+                                <thead>
+                                    <tr>
+{#                                        <th>Date</th>#}
+                                        <th>Temperature</th>
+                                        <th>Cloudiness</th>
+                                        <th>Humidity</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for forecast in forecasts %}
+                                        <tr>
+{#                                            <td>{{ forecast.date }}</td>#}
+                                            <td>[{{ forecast.temperature_min | floatformat:1 }} .. {{ forecast.temperature | floatformat:1 }} .. {{ forecast.temperature_max | floatformat:1 }}]°C</td>
+                                            <td>{{ forecast.description }}</td>
+                                            <td>{{ forecast.humidity }}%</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+</body>
+</html>
